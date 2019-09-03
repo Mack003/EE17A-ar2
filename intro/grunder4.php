@@ -15,7 +15,7 @@ $betyg = "de duger";
     <h1>bästa matstället</h1>
     <div class="mat">
     <h2><?php
-    echo = "$matStälle"§;
+    echo = "$matStälle";
     ?></h2>
     <p><?php
     echo $betyg;
