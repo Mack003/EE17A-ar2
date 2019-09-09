@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Uppgift 1-2</title>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form action="./skript.php" method="POST">
+        <h2>Kontaktuppgifter</h2><br>
+        <label>Förnamn</label>
+        <input type="text" name="fornamn" placeholder="Erik" required>
+        <label>efternamn</label>
+        <input type="text" name="efternamn" placeholder="Eriksson" required>
+        <label>Mobil</label>
+        <input type="tel" pattern="[0-9]{3}-[0-9]{7}" name="mobil" placeholder="000-0000000" required>
+        <label>E-post</label>
+        <input type="text" name="epost" placeholder="xxxx@mail.com" required>
+
+        <label>Kontaktbrev</label>
+        <div>
+            <input type="checkbox" name="brev" value="Ja" required>Ja
+        </div>
+        
+        <label>Kontakttyp</label>
+        <div>
+            <input type="radio" name="kontakt" value="Email" required>E-post
+            <input type="radio" name="kontakt" value="Telefon" required>Telefon
+        </div>
+
+        <button>Skicka</button>
+    </form>
+</body>
+</html>
