@@ -9,17 +9,19 @@
 </head>
 <body>
     <?php
+    if (isset($_REQUEST["fel"])) { 
     $fel=$_REQUEST["fel"];
-    if ($fel == ja) {
+    if ($fel == "ja") {
     echo "<p>Fel användarnamn eller lösenord. Försök igen</p>";
     }
+}
     ?>
     <form action="./skript-3-2.php" method="POST">
         <h2>Kontaktuppgifter</h2><br>
         <label>Användarnamn</label>
-        <input type="text" name="anamn" placeholder="********" required>
+        <input type="text" name="anamn" placeholder="Erik123" required>
         <label>Lösenord</label>
-        <input type="password" name="lösen" placeholder="Eriksson" required>
+        <input type="password" name="lösen" placeholder="********" required>
 
 
         <button>Skicka</button>
