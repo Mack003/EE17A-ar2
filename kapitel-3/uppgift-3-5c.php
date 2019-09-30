@@ -25,7 +25,8 @@
         <button>Skicka</button>
     </form>
     <?php
-    if (isset($_REQUEST["tal"], $_REQUEST["tid"], $_REQUEST["ranta"])) {
+    /* om data finns... gör de vi ska... */
+    if ( $tal && $ranta && $tid ) {
 /* Ta emot data */
 $tal = filter_input("INPUT_POST", $tal, FILTER_DEFAULT);
 $tid = filter_input("INPUT_POST", $tid, FILTER_DEFAULT);

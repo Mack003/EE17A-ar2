@@ -22,8 +22,14 @@
     <?php
     if (isset($_POST["namn"])) {
 /* Ta emot data */
-$namn = filter_input("INPUT_POST", $namn, FILTER_DEFAULT);
+$namn = filter_input_array(INPUT_POST);
 print_r($namn);
+/* sortera namn */
+sort($namn);
+/* Loopa igenom arrayen och skriv ut namnen */
+foreach ($namn as $namnet) {
+    echo "<p>$namnet</p>";
+}
 }
 ?>
 </body>
