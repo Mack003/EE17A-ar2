@@ -5,7 +5,7 @@
 * @author     Karim Ryde <karye.webb@gmail.com>
 * @license    PHP CC
 */
-function vara($bilden) {
+function varaNamn($bilden) {
     /* Plocka ut del före punkten */
     $delar1 = explode('.', $bilden);
     /* Dela upp efter - */
@@ -17,7 +17,7 @@ function vara($bilden) {
 
     return $vara;
 }
-function pris($bilden) {
+function varaPris($bilden) {
     /* Plocka ut del före punkten */
     $delar1 = explode('.', $bilden);
     /* Dela upp efter - */
