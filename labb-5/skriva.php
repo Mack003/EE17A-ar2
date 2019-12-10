@@ -2,7 +2,7 @@
 session_start();
 
 /* ÄR användaren inte inloggad? */
-if (!$_SESSION['login']) {
+if (!isset($_SESSION['login'])) {
     /* Nej, gå till login-sidan */
 header("Location: ./login.php?fran=skriva");
 }
