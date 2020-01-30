@@ -109,6 +109,10 @@ body {
     grid-template-columns: 1fr 2fr 1fr;
     grid-gap: 1em;
 }
+.anvandarnamn {
+    background-color: #305A85;
+    color: white;
+}
 form {
     margin: 1em 0;
     color: #4e4e4e;
@@ -182,4 +186,7 @@ form label {
 }
 form span {
     padding: 10px;
+}
+.avbryt {
+    background-color: red;
 }

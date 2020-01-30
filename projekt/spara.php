@@ -12,18 +12,23 @@ include_once "./konfig-db.php";
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form action="#" method="POST">
-        <h2>Registrera användare</h2>
-        <label>Användarnamn</label>
-        <input type="text" name="anamn" placeholder="Tex erik12" required>
-        <label>Lösenord</label>
-        <input type="password" name="lösen" required>
-        <button>Skicka</button>
-    </form>
-    <?php
+    <div class="kontainer">
+        <h1>Virtuell Checklista</h1>
+        <form action="#" method="POST">
+            <h2>Registrera användare</h2>
+            <label>Användarnamn</label>
+            <input type="text" name="anamn" placeholder="Tex erik12" required>
+            <label>Lösenord</label>
+            <input type="password" name="lösen" required>
+            <br>
+            <button>Registrera</button>
+        </form>
+        <p>Har du redan ett konto?</p>
+        <a class="btn btn-primary" href="./loggain.php">Logga in</a>
+        <?php
     $namn = filter_input(INPUT_POST, 'anamn', FILTER_SANITIZE_STRING);
     $lösen = filter_input(INPUT_POST, 'lösen', FILTER_SANITIZE_STRING);
-var_dump($namn, $lösen);
+    //var_dump($namn, $lösen);
     if ($namn && $lösen) {
         /* 1. Logga in */
         $conn = new mysqli($host, $användare, $lösenord, $databas);
@@ -32,23 +37,26 @@ var_dump($namn, $lösen);
         if ($conn->connect_error) {
             die("Kunde inte ansluta till databasen: " . $conn->connect_error);
         } else {
-              echo "<p>Gick bra att ansluta</p>";  
+            //echo "<p>Gick bra att ansluta</p>";
         }
 
         $hash = password_hash($lösen, PASSWORD_DEFAULT);
 
         /* 2. Kolla upp att kontouppgifter stämmer */
         $sql = "INSERT INTO `todo` (`användare`, `hash`) VALUES ('$namn', '$hash');";
-        var_dump($sql);
+        //var_dump($sql);
         $result = $conn->query($sql);
 
         /* Gick det bra? */
         if (!$result) {
             die("Något blev fel");
         } else {
-            echo "<p>Användare registrerad</p>";
+            echo "<div class=\"alert alert-success\" role=\"alert\">
+                Användare registrerad!
+            </div>";
         }
     }
     ?>
+    </div>
 </body>
 </html>
