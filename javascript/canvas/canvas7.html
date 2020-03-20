@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+        /* Element vi arbetar med */
+        const eCanvas = document.querySelector("canvas");
+
+        /* Ställ in bredd och storlek = fullscreen */
+        eCanvas.width = 600;
+        eCanvas.height = 500;
+
+        /* Väljer rit-api */
+
+        /* Globala variabler */
+        var ctx = eCanvas.getContext("2d");
+        var boll = {
+            x: 300,
+            y: 250,
+            dx: 1,
+            dy: 1
+        }
+
+        /* Skapa bildbehållare */
+        var image = new Image();
+        image.src = "./images/580b585b2edbce24c47b2b90.png"
+
+        /* Lyssna på tangenter */
+        window.addEventListener("keydown", flytta);
+        function flytta(e) {
+            console.log("e.key =", e.key);
+            if (e.key == "ArrowRight") {
+                boll.dx += 1;
+            }
+            if (e.key == "ArrowLeft") {
+                boll.dx -= 1;
+            }
+            if (e.key == "ArrowUp") {
+                boll.dy -= 1;
+            }
+            if (e.key == "ArrowDown") {
+                boll.dy += 1;
+            }
+        }
+
+
+        /* Loopen */
+        function animate() {
+            /* Tömma skärmen */
+            ctx.clearRect(0, 0, 600, 500);
+
+            /* Räkna ut position */
+
+            boll.x += boll.dx;
+            boll.y += boll.dy;
+
+            /* Rita bollen */
+            ctx.drawImage(image, boll.x - 25, boll.y - 25, 50, 50);
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>

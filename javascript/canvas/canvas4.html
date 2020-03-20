@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Canvas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+        /* Element vi använder */
+        const eCanvas = document.querySelector("canvas");
+
+        /* Ställ in storlek = fullscreen */
+        eCanvas.width = 800;
+        eCanvas.height = 500;
+
+        /* Väljer rit-api */
+        var ctx = eCanvas.getContext("2d");
+
+        const windows = new Image();
+
+        /* figur */
+        function smiley(x, y) {
+        ctx.drawImage(windows, smileyX, smileyY, 100, 100)
+        }
+
+        /* Globala variabler */
+        var smileyX = Math.random() * 400, //figurens X
+            smileyY = Math.random() * 400; //figurens Y
+        dx = Math.ceil(Math.random() * 5); //Förflyttningen i X
+        dy = Math.ceil(Math.random() * 5); //Förflyttningen i Y
+
+        function setup() {
+            windows.src = "./images/windows.png";
+
+            window.requestAnimationFrame(gameLoop)
+        }
+
+
+
+        function gameLoop() {
+            /* Sudda ut canvas */
+            ctx.clearRect(0, 0, 1000, 1500);
+
+            /* Rita figur */
+            smiley(smileyX, smileyY);
+
+            /* ändra position */
+            smileyX += dx;
+            smileyY += dy;
+
+            /* Slumpa färg */
+            function slumpFarg() {
+                var r = Math.ceil(Math.random() * 255);
+                var g = Math.ceil(Math.random() * 255);
+                var b = Math.ceil(Math.random() * 255);
+                var farg = "rgb(" + r + ", " + g + ", " + b + ")"
+                return farg;
+            }
+
+            /* BOUNCE */
+            /* Nedre Kant */
+            if ((smileyY + 100) > 500 || (smileyY) < 0) {
+                dy = -dy;
+                document.body.style.backgroundColor = slumpFarg();
+            }
+            if ((smileyX + 100) > 800 || (smileyX) < 0) {
+                dx = -dx;
+                document.body.style.backgroundColor = slumpFarg();
+            }
+
+
+            /* Upprepa */
+            window.requestAnimationFrame(gameLoop);
+        }
+
+        /* Kör igång loopen */
+        setup();
+    </script>
+</body>
+</html>

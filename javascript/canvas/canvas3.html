@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id='canvas'>
+        Oops! din webbläsare stödjer inte canvas.
+    </canvas>
+
+    <script>
+        /* Element vi använder */
+        const eCanvas = document.querySelector("#canvas");
+
+        /* Ställ in bredd och höjd till samma som CSS */
+        eCanvas.width  = eCanvas.scrollWidth;
+        eCanvas.height = eCanvas.scrollHeight;
+        /* Slå på ritmotorn */
+        var ctx = eCanvas.getContext('2d');
+        
+       /* Skapa en bildbehållare */
+       var image = new Image();
+       image.src = './images/image.png';
+       /* vänta på att bilden ska laddas */
+       image.addEventListener("load", function() {
+        ctx.drawImage(image, 50, 50, 500, 500);
+       });
+
+       
+
+    </script>
+</body>
+</html>

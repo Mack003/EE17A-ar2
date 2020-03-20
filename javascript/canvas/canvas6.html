@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+        /* Element vi arbetar med */
+        const eCanvas = document.querySelector("canvas");
+
+        /* Ställ in bredd och storlek = fullscreen */
+        eCanvas.width = 600;
+        eCanvas.height = 500;
+
+        /* Väljer rit-api */
+
+        /* Globala variabler */
+        var ctx = eCanvas.getContext("2d");
+        var boll = {
+        x: 200,
+        y: 200,
+        dx: 1,
+        dy: 1
+        };
+
+        /* Starvärden */
+        boll.x = Math.random() * 400 + 50, //figurens X
+        boll.y = Math.random() * 400 + 50; //figurens Y
+
+        ctx.fillStyle = "white";
+
+        /* Rita boll */
+        function ritaBoll() {
+            ctx.beginPath();
+            ctx.arc(boll.x, boll.y, boll.radie, 0, Math.PI * 2);
+            ctx.fill()
+        }
+
+        /* Animationsloop */
+        function animate() {
+            /* Tömma skärmen */
+            ctx.clearRect(0, 0, 600, 500);
+
+            /* Rita bollen */
+            ritaBoll();
+
+            /* Animera bollen */
+            /* Nedre Kant */
+            if (boll.x > 570 || boll.x < 30){
+                boll.dx = -boll.dx;
+            }
+            if (boll.y > 470 || boll.y < 30) {
+                boll.dy = -boll.dy;
+            }
+            boll.x += boll.dx;
+            boll.y += boll.dy;
+
+            requestAnimationFrame(animate);
+        }
+        animate()
+    </script>
+</body>
+</html>
