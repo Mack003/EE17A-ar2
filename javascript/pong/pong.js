@@ -6,6 +6,8 @@ const knappStart = document.querySelector("#start");
 const knappStop = document.querySelector("#stop");
 const ePoäng = document.querySelector("#poäng");
 const eHighscore = document.querySelector("#highscore");
+const eSmash = document.querySelector("#smash");
+const eStuds = document.querySelector("#studs");
 
 /* Ställ in bredd och storlek */
 eCanvas.width = 600;
@@ -31,21 +33,21 @@ var racket = {
 var startFlagga = false;
 var poäng = 0;
 
-/* Skapa ljudobjekt */
-studs = new Audio("./studs.wav");
-smash = new Audio("./smash.wav");
-
-/* Läs highscore från databasen */
+/* Hämta highscore från databasen */
 lasaHighscore();
+
+/* Skapa ljudobjekt */
+/* studs = new Audio("./studs.wav");
+smash = new Audio("./smash.wav"); */
 
 /* Starta spelet när vi trycker på Start */
 eForm.addEventListener("submit", function(e) {
     e.preventDefault();
 
     if (!startFlagga) {
-        sparaNamn();
         startFlagga = true;
         reset();
+        sparaNamn();
     }
 });
 
@@ -146,7 +148,7 @@ function animate() {
             boll.dx++;
             boll.dy++;
 
-            smash.play();
+            eSmash.play();
         }
     }
 
@@ -160,7 +162,7 @@ function animate() {
     /* Studsa tillbaka från höger/vänsterkanten */
     if (boll.x > 600 - boll.radie) {
         boll.dx = -boll.dx;
-        studs.play();
+        eStuds.play();
     }
     /* Studsa tillbaka från vänsterkanten */
     if (boll.y < boll.radie || boll.y > 500 - boll.radie) {
@@ -176,16 +178,18 @@ function animate() {
         requestAnimationFrame(animate);
     }
 }
+
 function sparaNamn() {
     var namn = eNamn.value;
+    console.log("namn=", namn);
 
-    /* Låser rutan */
+    /* Låser input-rutan */
     eNamn.readOnly;
 
-    /* Skapa ajax för data */
+    /* Skapa ajax för att kunna skicka data */
     var ajax = new XMLHttpRequest();
 
-    /* Omvandla till post */
+    /* Omvandla data till POST */
     var postData = new FormData();
     postData.append("namn", namn);
 
@@ -196,9 +200,43 @@ function sparaNamn() {
     /* Ta emot svaret */
     ajax.addEventListener("loadend", function() {
         console.log("Tar emot svar=", this.responseText);
-        
     });
 }
+
+/* Uppdatera spelarens poäng: skicka namn & poäng */
 function sparaPoäng() {
-    
+    var namn = eNamn.value;
+
+    /* Skapa ajax för att kunna skicka data */
+    var ajax = new XMLHttpRequest();
+
+    /* Omvandla data till POST */
+    var postData = new FormData();
+    postData.append("namn", namn);
+    postData.append("poäng", poäng);
+
+    /* Skicka data */
+    ajax.open("POST", "./spara-poang.php");
+    ajax.send(postData);
+
+    /* Ta emot svaret */
+    ajax.addEventListener("loadend", function() {
+        console.log("Tar emot svar=", this.responseText);
+    });
+}
+
+/* Hämta highscore, dvs 5 högsta poängen */
+function lasaHighscore() {
+    /* Skapa ajax för att kunna skicka data */
+    var ajax = new XMLHttpRequest();
+
+    /* Gör ett anrop */
+    ajax.open("POST", "./lasa-highscore.php");
+    ajax.send();
+
+    /* Ta emot svaret */
+    ajax.addEventListener("loadend", function() {
+        console.log("Tar emot svar=", this.responseText);
+        eHighscore.innerHTML = this.responseText;
+    });
 }
