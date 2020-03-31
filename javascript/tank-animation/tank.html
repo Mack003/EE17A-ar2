@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>tank</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./tank.css">
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+        /* Element vi arbetar med */
+        const eCanvas = document.querySelector("canvas");
+        const ePoäng = document.querySelector("#poäng");
+
+
+        /* Ställ in bredd och storlek */
+        eCanvas.width = 800;
+        eCanvas.height = 600;
+
+        /* Starta canvas rityta */
+        var ctx = eCanvas.getContext("2d");
+
+        var tank = {
+            x: eCanvas.width / 2,
+            y: eCanvas.height / 2,
+            rot: 0,
+            bild: new Image()
+        }
+
+        /* Ladda bilder */
+        tank.bild.src = "./tanksheet.png";
+
+        //var coinSprite = new Image();
+        //coinSprite.src = "./coin-sprite.png";
+
+        /* Frame index i tank */
+        var tankIndex = 0;
+        var tankFrames = [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6];
+
+        //var coinIndex = 0;
+        //var coinFrames = [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9];
+
+        /* Starta spel */
+        gameLoop();
+
+        /* ********** */
+        /* Funktioner */
+
+        function ritaTank() {
+            var ruta = tankFrames[tankIndex];
+            ctx.save();
+            ctx.translate(tank.x, tank.y);
+            ctx.rotate(tank.rot);
+            ctx.drawImage(tank.bild, ruta * 32, 0, 32, 32, -25, -25, 50, 50);
+            ctx.restore();
+
+            tankIndex++;
+            if (tankIndex == tankFrames.length) {
+                tankIndex = 0;
+            }
+        }
+
+        /*  function ritaCoin() {
+            var ruta = coinFrames[tankIndex];
+            ctx.drawImage(coinSprite, ruta * 44, 0, 44, 44, 200, 100, 44, 40);
+
+            coinIndex++;
+            if (coinIndex == coinFrames.length) {
+                coinIndex = 0;
+
+        }*/
+        /* Lyssna på pil-tangenter */
+        window.addEventListener("keydown", function (e) {
+            switch (e.key) {
+                case "ArrowRight":
+                    tank.x++
+                    tank.rot = Math.PI / 2;
+                    break;
+                case "ArrowLeft":
+                    tank.x--;
+                    tank.rot = -Math.PI / 2;
+                    break;
+                case "ArrowDown":
+                    tank.y++;
+                    tank.rot = Math.PI;
+                    break;
+                case "ArrowUp":
+                    tank.y--;
+                    tank.rot = 0
+                    break;
+            }
+        });
+
+
+        function gameLoop() {
+            /* rensa canvas */
+            ctx.clearRect(0, 0, eCanvas.width, eCanvas.height);
+
+            ritaTank();
+            //ritaCoin();
+
+            requestAnimationFrame(gameLoop);
+        }
+    </script>
+</body>
+</html>

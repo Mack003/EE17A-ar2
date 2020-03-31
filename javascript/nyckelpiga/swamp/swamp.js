@@ -9,7 +9,7 @@ eCanvas.height = 600;
 var ctx = eCanvas.getContext("2d");
 
 /* Globala variabler */
-var gameOver = false;
+var isGameOver = false;
 var poäng = 0;
 var piga = {
     rad: 0,
@@ -136,11 +136,7 @@ function krockMedPiga(figur) {
     /* Om monster är i höjd med pigan */
     if ((piga.rad * 50) < figur.y && figur.y < (piga.rad * 50 + 50)) {
         if ((piga.kol * 50) < figur.x && figur.x < (piga.kol * 50 + 50)) {
-            ctx.fillStyle = "#888";
-            ctx.fillRect(0, 0, 800, 600);
-            ctx.fillStyle = "red";
-            ctx.fillText("Game Over!", 400, 300);
-            gameOver = true;
+            isGameOver = true;
         }
     }
 }
@@ -175,6 +171,14 @@ function ritaKarta() {
     }
 }
 
+/* Game over */
+function gameOver() {
+    ctx.fillStyle = "#888";
+    ctx.fillRect(0, 0, 800, 600);
+    ctx.fillStyle = "red";
+    ctx.fillText("Game Over!", 400, 300);
+}
+
 /* Lyssna på pil-tangenter */
 window.addEventListener("keydown", function(e) {
     switch (e.key) {
@@ -194,7 +198,7 @@ window.addEventListener("keydown", function(e) {
             if (karta[piga.rad + 1][piga.kol] == 0) {
                 piga.rad++;
             }
-            piga.rot = Math.PI;
+            piga.rot = 180;
             break;
         case "ArrowUp":
             if (karta[piga.rad - 1][piga.kol] == 0) {
@@ -220,7 +224,9 @@ function gameLoop() {
     mynt.forEach(ritaMynt);
     mynt.forEach(plockaMynt);
 
-    if (!gameOver) {
+    if (!isGameOver) {
         requestAnimationFrame(gameLoop);
+    } else {
+        gameOver();
     }
 }
